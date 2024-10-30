@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:windsor_caesar_hub/models/news.dart';
 import 'package:windsor_caesar_hub/pages/news_info_page.dart';
+import 'package:windsor_caesar_hub/utils/utils.dart';
 
 class Main2 extends StatefulWidget {
   const Main2({super.key});
@@ -42,8 +43,8 @@ class _Main2State extends State<Main2> with TickerProviderStateMixin {
               children: [
                 Image.asset(
                   "images/arrow.png",
-                  width: 30,
-                  height: 30,
+                  width: screenSize.height * 0.02,
+                  height: screenSize.height * 0.02,
                 ),
               ],
             ),
@@ -65,6 +66,7 @@ class _Main2State extends State<Main2> with TickerProviderStateMixin {
 
     return Scaffold(
       appBar: AppBar(
+        surfaceTintColor: Colors.transparent,
         systemOverlayStyle:
             const SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
         backgroundColor: Colors.transparent,
@@ -107,7 +109,7 @@ class _Main2State extends State<Main2> with TickerProviderStateMixin {
                     indicatorWeight: 0.0,
                     dividerColor: Colors.transparent,
                     indicator: BoxDecoration(
-                      color: Color(0xFFD4BA15),
+                      color: const Color(0xFFD4BA15),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     labelPadding: EdgeInsets.zero,
@@ -137,7 +139,7 @@ class _Main2State extends State<Main2> with TickerProviderStateMixin {
                               crossAxisCount: 2,
                               crossAxisSpacing: 10,
                               mainAxisSpacing: 10,
-                              childAspectRatio: 3 / 2,
+                              childAspectRatio: 3 / 2.5,
                             ),
                             itemCount: windsorNews.length,
                             itemBuilder: (context, index) {
