@@ -13,8 +13,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     screenSize = MediaQuery.of(context).size;
 
-    return const MaterialApp(
-      home: OnboardingPage(),
+    return MaterialApp(
+      theme: ThemeData(fontFamily: "Inter"),
+      home: const OnboardingPage(),
       debugShowCheckedModeBanner: false,
     );
   }

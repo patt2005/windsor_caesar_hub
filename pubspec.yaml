@@ -73,7 +73,7 @@ flutter:
   fonts:
     - family: Inter
       fonts:
-        - asset: fonts/Inter-VariableFont_opsz,wght.ttf
+        - asset: fonts/Inter_24pt-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
