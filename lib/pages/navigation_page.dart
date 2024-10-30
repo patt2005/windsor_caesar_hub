@@ -10,7 +10,7 @@ class NavigationPage extends StatelessWidget {
     return CupertinoTabScaffold(
       backgroundColor: Colors.white,
       tabBar: CupertinoTabBar(
-        activeColor: Colors.yellow,
+        activeColor: const Color(0xFFD4BA15),
         backgroundColor: Colors.white,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -46,6 +46,12 @@ class NavigationPage extends StatelessWidget {
               },
             );
           case 2:
+            return CupertinoTabView(
+              builder: (BuildContext context) {
+                return const Main2();
+              },
+            );
+          case 3:
             return CupertinoTabView(
               builder: (BuildContext context) {
                 return const Main2();

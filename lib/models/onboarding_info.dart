@@ -28,8 +28,8 @@ List<OnboardingInfo> onboardingPages = [
         "Propose ideas to improve Windsor, vote on initiatives, and help make a difference. Your ideas matter!",
   ),
   OnboardingInfo(
-    onRight: false,
-    imageAssetPath: "images/onboarding3.png",
+    onRight: true,
+    imageAssetPath: "images/onboarding1.png",
     title: "Join volunteer projects!",
     description:
         "Find volunteer events, participate in city projects, and create your own activities. Together, we can make Windsor a better place!",

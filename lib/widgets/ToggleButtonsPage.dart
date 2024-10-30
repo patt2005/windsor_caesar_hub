@@ -36,8 +36,9 @@ class _ToggleButtonsPageState extends State<ToggleButtonsPage> {
                         });
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            isButton1Pressed ? Colors.yellow : Colors.white,
+                        backgroundColor: isButton1Pressed
+                            ? const Color(0xFFD4BA15)
+                            : Colors.white,
                         foregroundColor: Colors.black,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
@@ -57,8 +58,9 @@ class _ToggleButtonsPageState extends State<ToggleButtonsPage> {
                         });
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            isButton2Pressed ? Colors.yellow : Colors.white,
+                        backgroundColor: isButton2Pressed
+                            ? const Color(0xFFD4BA15)
+                            : Colors.white,
                         foregroundColor: Colors.black,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),

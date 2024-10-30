@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:windsor_caesar_hub/models/news.dart';
-import 'package:windsor_caesar_hub/utils/utils.dart';
+import 'package:windsor_caesar_hub/pages/news_info_page.dart';
 
 class Main2 extends StatefulWidget {
   const Main2({super.key});
@@ -13,31 +15,40 @@ class _Main2State extends State<Main2> with TickerProviderStateMixin {
   late TabController _tabController;
 
   Widget _buildNewsCard(News newsInfo) {
-    return Container(
-      padding: const EdgeInsets.all(13),
-      decoration: BoxDecoration(
-        color: const Color(0xFFF5F5F5),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Column(
-        children: [
-          Text(
-            newsInfo.title,
-            style: const TextStyle(
-                color: Colors.black, fontWeight: FontWeight.w500),
+    return GestureDetector(
+      onTap: () async {
+        await Navigator.of(context).push(
+          CupertinoPageRoute(
+            builder: (context) => NewsInfoPage(newsInfo: newsInfo),
           ),
-          const Spacer(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Image.asset(
-                "images/arrow.png",
-                width: 30,
-                height: 30,
-              ),
-            ],
-          ),
-        ],
+        );
+      },
+      child: Container(
+        padding: const EdgeInsets.all(13),
+        decoration: BoxDecoration(
+          color: const Color(0xFFF5F5F5),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Column(
+          children: [
+            Text(
+              newsInfo.title,
+              style: const TextStyle(
+                  color: Colors.black, fontWeight: FontWeight.w500),
+            ),
+            const Spacer(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Image.asset(
+                  "images/arrow.png",
+                  width: 30,
+                  height: 30,
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -54,6 +65,8 @@ class _Main2State extends State<Main2> with TickerProviderStateMixin {
 
     return Scaffold(
       appBar: AppBar(
+        systemOverlayStyle:
+            const SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
@@ -61,7 +74,7 @@ class _Main2State extends State<Main2> with TickerProviderStateMixin {
           "Main",
           style: TextStyle(
             color: Colors.black,
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),
@@ -94,7 +107,7 @@ class _Main2State extends State<Main2> with TickerProviderStateMixin {
                     indicatorWeight: 0.0,
                     dividerColor: Colors.transparent,
                     indicator: BoxDecoration(
-                      color: Colors.yellow,
+                      color: Color(0xFFD4BA15),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     labelPadding: EdgeInsets.zero,

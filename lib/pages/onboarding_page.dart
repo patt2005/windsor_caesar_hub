@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:windsor_caesar_hub/pages/main2.dart';
 import 'package:windsor_caesar_hub/pages/navigation_page.dart';
 import 'package:windsor_caesar_hub/utils/utils.dart';
 import '../models/onboarding_info.dart';
