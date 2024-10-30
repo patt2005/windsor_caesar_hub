@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:windsor_caesar_hub/utils/utils.dart';
 import 'pages/onboarding_page.dart';
 
 void main() {
@@ -10,6 +11,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    screenSize = MediaQuery.of(context).size;
+
     return const MaterialApp(
       home: OnboardingPage(),
       debugShowCheckedModeBanner: false,
