@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:windsor_caesar_hub/pages/initiatives.dart';
 
 import 'package:windsor_caesar_hub/pages/main2.dart';
+import 'package:windsor_caesar_hub/pages/profile_ipage.dart';
 import 'package:windsor_caesar_hub/pages/voluntarism.dart';
 
 class NavigationPage extends StatelessWidget {
@@ -57,7 +58,7 @@ class NavigationPage extends StatelessWidget {
           case 3:
             return CupertinoTabView(
               builder: (BuildContext context) {
-                return const Main2();
+                return const ProfileIpage();
               },
             );
           default:

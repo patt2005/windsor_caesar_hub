@@ -80,7 +80,9 @@ class _VoluntarismFieldState extends State<VoluntarismField> {
 
   Widget buildSecondField() {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.pop(context);
+      },
       child: Container(
         margin: const EdgeInsets.only(top: 20),
         width: double.infinity,
