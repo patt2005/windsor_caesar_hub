@@ -1,4 +1,8 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:windsor_caesar_hub/models/user.dart';
+import 'package:windsor_caesar_hub/utils/app_manager.dart';
 
 class ProfileInfo3 extends StatefulWidget {
   const ProfileInfo3({super.key});
@@ -16,12 +20,8 @@ class _ProfileInfo3State extends State<ProfileInfo3> {
     "Your name",
     "Your last name"
   ];
-  final List<String> _hints1 = [
-    "arnold@gmail.com",
-    "+99999999999",
-    "Arnold",
-    "Arnold"
-  ];
+  final TextEditingController _aboutController = TextEditingController();
+
   Widget buildTextFieldDescription() {
     return Container(
       margin: const EdgeInsets.only(top: 20),
@@ -37,10 +37,11 @@ class _ProfileInfo3State extends State<ProfileInfo3> {
           ),
         ],
       ),
-      child: const TextField(
+      child: TextField(
+        controller: _aboutController,
         maxLines: 5,
-        decoration: InputDecoration(
-          labelText: "Exemplu",
+        decoration: const InputDecoration(
+          labelText: "Information",
           border: InputBorder.none,
         ),
       ),
@@ -50,7 +51,7 @@ class _ProfileInfo3State extends State<ProfileInfo3> {
   Widget buildTextField(int index) {
     return Container(
       margin: const EdgeInsets.only(bottom: 10),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
@@ -74,7 +75,7 @@ class _ProfileInfo3State extends State<ProfileInfo3> {
             ),
           ),
           Text(
-            _hints1[index],
+            _names1[index],
             style: const TextStyle(
               color: Colors.grey,
               fontSize: 12,
@@ -86,33 +87,64 @@ class _ProfileInfo3State extends State<ProfileInfo3> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) {
+        final provider = Provider.of<AppManager>(context, listen: false);
+        _controllers2[0].text = provider.userInfo!.Email;
+        _controllers2[1].text = provider.userInfo!.phone.toString();
+        _controllers2[2].text = provider.userInfo!.firstname;
+        _controllers2[3].text = provider.userInfo!.lastname;
+        _aboutController.text = provider.userInfo!.about;
+        setState(() {});
+      },
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final provider = Provider.of<AppManager>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
+        surfaceTintColor: Colors.transparent,
         centerTitle: true,
         title: const Text(
           "Profile",
           style: TextStyle(
             color: Colors.black,
             fontFamily: "Inter",
+            fontWeight: FontWeight.w600,
             fontSize: 16,
           ),
         ),
-        leading: Padding(
-          padding: const EdgeInsets.only(right: 16.0),
-          child: CircleAvatar(
-            backgroundColor: Colors.white,
-            child: IconButton(
-              icon: const Icon(Icons.add, color: Colors.black),
-              onPressed: () {},
-            ),
-          ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
         ),
         actions: [
           GestureDetector(
             onTap: () {
+              for (var controller in _controllers2) {
+                if (controller.text.isEmpty) {
+                  return;
+                }
+              }
+              provider.setUserInfo(
+                User(
+                  firstname: _controllers2[2].text,
+                  lastname: _controllers2[3].text,
+                  Email: _controllers2[0].text,
+                  phone: int.parse(_controllers2[1].text),
+                  about: _aboutController.text,
+                  imagepath: provider.userInfo!.imagepath,
+                ),
+              );
               Navigator.pop(context);
             },
             child: const Padding(
@@ -131,7 +163,7 @@ class _ProfileInfo3State extends State<ProfileInfo3> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -139,10 +171,10 @@ class _ProfileInfo3State extends State<ProfileInfo3> {
                   child: Container(
                     width: size.width * 0.25,
                     height: size.height * 0.25,
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       image: DecorationImage(
-                        image: AssetImage("images/Ellipse 2.png"),
+                        image: FileImage(File(provider.userInfo!.imagepath)),
                         fit: BoxFit.cover,
                       ),
                     ),

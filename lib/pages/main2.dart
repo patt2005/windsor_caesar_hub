@@ -141,6 +141,22 @@ class _Main2State extends State<Main2> with TickerProviderStateMixin {
 
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          TextButton(
+            onPressed: () async {
+              await Navigator.of(context).push(
+                CupertinoPageRoute(
+                  builder: (context) => const RoutesPage(),
+                ),
+              );
+            },
+            child: const Text(
+              "Routes",
+              style: TextStyle(fontSize: 17),
+            ),
+          ),
+          const SizedBox(width: 7),
+        ],
         surfaceTintColor: Colors.transparent,
         systemOverlayStyle:
             const SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
@@ -378,31 +394,6 @@ class _Main2State extends State<Main2> with TickerProviderStateMixin {
                                       child: const Text("Add building"),
                                     ),
                                     const SizedBox(width: 10),
-                                    ElevatedButton(
-                                      style: ButtonStyle(
-                                        elevation:
-                                            const WidgetStatePropertyAll(0),
-                                        backgroundColor:
-                                            const WidgetStatePropertyAll(
-                                          Color(0xFFD3FFCC),
-                                        ),
-                                        shape: WidgetStatePropertyAll(
-                                          RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                        ),
-                                      ),
-                                      onPressed: () async {
-                                        await Navigator.of(context).push(
-                                          CupertinoPageRoute(
-                                            builder: (context) =>
-                                                const RoutesPage(),
-                                          ),
-                                        );
-                                      },
-                                      child: const Text("Add route"),
-                                    ),
                                   ],
                                 ),
                               ),

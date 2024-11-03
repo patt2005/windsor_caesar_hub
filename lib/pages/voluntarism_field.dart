@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
+import 'package:windsor_caesar_hub/models/voluntarism.text.dart';
+import 'package:windsor_caesar_hub/utils/app_manager.dart';
 import 'package:windsor_caesar_hub/utils/utils.dart';
 
 class VoluntarismField extends StatefulWidget {
@@ -14,11 +18,12 @@ class _VoluntarismFieldState extends State<VoluntarismField> {
 
   final List<String> _names = ["Name", "Location", "Date", "Number of people"];
   final List<String> _hints = ["required", "required", "required", "Answer"];
+  final TextEditingController _descriptionController = TextEditingController();
 
   Widget buildTextField(int index) {
     return Container(
       margin: const EdgeInsets.only(bottom: 10),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
@@ -36,13 +41,18 @@ class _VoluntarismFieldState extends State<VoluntarismField> {
             child: TextField(
               controller: _controllers[index],
               decoration: InputDecoration(
-                labelText: _names[index], // Main label
+                labelText: _names[index],
                 border: InputBorder.none,
               ),
+              readOnly: index == 2, // Make Date field read-only
+              keyboardType: index == 3
+                  ? TextInputType.number
+                  : TextInputType.text, // Set keyboard type
+              onTap: index == 2 ? () => _selectDate(context, index) : null,
             ),
           ),
           Text(
-            _hints[index], // Hint text
+            _hints[index],
             style: const TextStyle(
               color: Colors.grey,
               fontSize: 12,
@@ -51,6 +61,22 @@ class _VoluntarismFieldState extends State<VoluntarismField> {
         ],
       ),
     );
+  }
+
+  Future<void> _selectDate(BuildContext context, int index) async {
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime(2100),
+    );
+
+    if (pickedDate != null) {
+      String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+      setState(() {
+        _controllers[index].text = formattedDate;
+      });
+    }
   }
 
   Widget buildDescriptionField() {
@@ -68,9 +94,10 @@ class _VoluntarismFieldState extends State<VoluntarismField> {
           ),
         ],
       ),
-      child: const TextField(
+      child: TextField(
+        controller: _descriptionController,
         maxLines: 5,
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           labelText: "Brief description of the event",
           border: InputBorder.none,
         ),
@@ -78,9 +105,19 @@ class _VoluntarismFieldState extends State<VoluntarismField> {
     );
   }
 
-  Widget buildSecondField() {
+  Widget buildSubmitButton() {
     return GestureDetector(
       onTap: () {
+        final provider = Provider.of<AppManager>(context, listen: false);
+        provider.addVoluntarism(
+          Voluntarism(
+            name: _controllers[0].text,
+            location: _controllers[1].text,
+            date: DateTime.parse(_controllers[2].text),
+            numberOfPeople: int.tryParse(_controllers[3].text) ?? 0,
+            description: _descriptionController.text,
+          ),
+        );
         Navigator.pop(context);
       },
       child: Container(
@@ -134,12 +171,9 @@ class _VoluntarismFieldState extends State<VoluntarismField> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            // Generăm câmpurile de text
             ...List.generate(4, (index) => buildTextField(index)),
-            // Adăugăm câmpul de descriere
             buildDescriptionField(),
-            // Adăugăm butonul "Done"
-            buildSecondField(),
+            buildSubmitButton(),
           ],
         ),
       ),

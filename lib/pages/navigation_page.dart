@@ -46,13 +46,13 @@ class NavigationPage extends StatelessWidget {
           case 1:
             return CupertinoTabView(
               builder: (BuildContext context) {
-                return Initiatives();
+                return const Initiatives();
               },
             );
           case 2:
             return CupertinoTabView(
               builder: (BuildContext context) {
-                return Voluntarism();
+                return const VoluntarismListPage();
               },
             );
           case 3:
