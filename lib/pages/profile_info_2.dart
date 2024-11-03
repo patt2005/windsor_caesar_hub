@@ -64,7 +64,10 @@ class _ProfileInfo2State extends State<ProfileInfo2> {
     }
 
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
         centerTitle: true,
         title: const Text(
           "Profile",
@@ -97,49 +100,61 @@ class _ProfileInfo2State extends State<ProfileInfo2> {
           ),
         ],
       ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Center(
-                child: Container(
-                  width: size.width * 0.25,
-                  height: size.height * 0.25,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                      image: AssetImage("images/Ellipse 2.png"),
-                      fit: BoxFit.cover,
+      body: Stack(
+        children: [
+          Positioned(
+            top: 0,
+            child: Image.asset(
+              "images/Frame 237.png",
+            ),
+          ),
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Center(
+                    child: Container(
+                      width: size.width * 0.25,
+                      height: size.height * 0.25,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          image: AssetImage("images/Ellipse 2.png"),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                  const Text(
+                    "Arnold Arnorld",
+                    style: TextStyle(
+                        fontSize: 22, fontFamily: "Inter", color: Colors.black),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const Center(
+                    child: Text(
+                      "Yorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontFamily: "Inter",
+                          color: Colors.black),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  ...List.generate(2, (index) => buildTextField(index)),
+                ],
               ),
-              const Text(
-                "Arnold Arnorld",
-                style: TextStyle(
-                    fontSize: 22, fontFamily: "Inter", color: Colors.black),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              const Center(
-                child: Text(
-                  "Yorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 14, fontFamily: "Inter", color: Colors.black),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              ...List.generate(2, (index) => buildTextField(index)),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

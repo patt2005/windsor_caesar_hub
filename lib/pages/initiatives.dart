@@ -20,7 +20,7 @@ class MyCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
               ),
               child: const Center(
-                child: const Icon(Icons.image, size: 40, color: Colors.grey),
+                child: Icon(Icons.image, size: 40, color: Colors.grey),
               ),
             ),
             Positioned(
@@ -43,6 +43,8 @@ class MyCard extends StatelessWidget {
 }
 
 class Initiatives extends StatelessWidget {
+  const Initiatives({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

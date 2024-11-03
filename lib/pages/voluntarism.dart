@@ -39,6 +39,8 @@ class MyCard extends StatelessWidget {
 }
 
 class Voluntarism extends StatelessWidget {
+  const Voluntarism({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

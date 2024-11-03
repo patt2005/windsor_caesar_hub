@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:windsor_caesar_hub/pages/profile_info_2.dart';
-import 'package:windsor_caesar_hub/pages/voluntarism_field.dart';
 
 class ProfileIpage extends StatefulWidget {
   const ProfileIpage({super.key});
@@ -40,7 +39,7 @@ class _ProfileIpageState extends State<ProfileIpage> {
         children: [
           Expanded(
             child: TextField(
-              controller: _controllers2[index], // Corectat: _controllers2
+              controller: _controllers2[index],
               decoration: InputDecoration(
                 labelText: _names1[index], // Main label
                 border: InputBorder.none,
@@ -119,7 +118,7 @@ class _ProfileIpageState extends State<ProfileIpage> {
             child: const Padding(
               padding: EdgeInsets.symmetric(horizontal: 15.0),
               child: Text(
-                "Edit",
+                "Done",
                 style: TextStyle(
                   fontSize: 16,
                   fontFamily: "Inter",
@@ -135,9 +134,8 @@ class _ProfileIpageState extends State<ProfileIpage> {
           padding: const EdgeInsets.all(20.0),
           child: Column(
             children: [
-              ...List.generate(4,
-                  (index) => buildTextField(index)), // Corectat: buildTextField
-              buildDescriptionField(), // Afișează câmpul de descriere
+              ...List.generate(4, (index) => buildTextField(index)),
+              buildDescriptionField(),
             ],
           ),
         ),
