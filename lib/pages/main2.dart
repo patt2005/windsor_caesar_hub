@@ -176,8 +176,6 @@ class _Main2State extends State<Main2> with TickerProviderStateMixin {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
                   decoration: BoxDecoration(
@@ -241,247 +239,259 @@ class _Main2State extends State<Main2> with TickerProviderStateMixin {
                         ? const Center(
                             child: CupertinoActivityIndicator(),
                           )
-                        : Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                width: screenSize.width,
-                                height: screenSize.height * 0.4,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(20),
-                                  child: GoogleMap(
-                                    myLocationButtonEnabled: false,
-                                    onMapCreated:
-                                        (GoogleMapController controller) async {
-                                      if (!_isControllerCompleted) {
-                                        _controller.complete(controller);
-                                        _isControllerCompleted = true;
-                                      }
-                                    },
-                                    myLocationEnabled: true,
-                                    markers: _markers,
-                                    onTap: (argument) {
-                                      if (_textController.text.isNotEmpty) {
-                                        _addMarker(argument);
-                                      } else {
-                                        _showAlertDialog(
-                                          "Add Map Point",
-                                          "You can add a new map point by selecting one of the options below.",
-                                        );
-                                      }
-                                    },
-                                    mapType: MapType.normal,
-                                    initialCameraPosition: userLocation!,
+                        : Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  width: screenSize.width,
+                                  height: screenSize.height * 0.4,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: GoogleMap(
+                                      myLocationButtonEnabled: false,
+                                      onMapCreated: (GoogleMapController
+                                          controller) async {
+                                        if (!_isControllerCompleted) {
+                                          _controller.complete(controller);
+                                          _isControllerCompleted = true;
+                                        }
+                                      },
+                                      myLocationEnabled: true,
+                                      markers: _markers,
+                                      onTap: (argument) {
+                                        if (_textController.text.isNotEmpty) {
+                                          _addMarker(argument);
+                                        } else {
+                                          _showAlertDialog(
+                                            "Add Map Point",
+                                            "You can add a new map point by selecting one of the options below.",
+                                          );
+                                        }
+                                      },
+                                      mapType: MapType.normal,
+                                      initialCameraPosition: userLocation!,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              SizedBox(height: screenSize.height * 0.01),
-                              SizedBox(
-                                height: screenSize.height * 0.05,
-                                child: ListView(
-                                  scrollDirection: Axis.horizontal,
-                                  children: [
-                                    ElevatedButton(
-                                      style: ButtonStyle(
-                                        elevation:
-                                            const WidgetStatePropertyAll(0),
-                                        backgroundColor: WidgetStatePropertyAll(
-                                          primaryColor,
-                                        ),
-                                        shape: WidgetStatePropertyAll(
-                                          RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
+                                SizedBox(height: screenSize.height * 0.01),
+                                SizedBox(
+                                  height: screenSize.height * 0.05,
+                                  child: ListView(
+                                    scrollDirection: Axis.horizontal,
+                                    children: [
+                                      ElevatedButton(
+                                        style: ButtonStyle(
+                                          elevation:
+                                              const WidgetStatePropertyAll(0),
+                                          backgroundColor:
+                                              WidgetStatePropertyAll(
+                                            primaryColor,
+                                          ),
+                                          shape: WidgetStatePropertyAll(
+                                            RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      onPressed: () async {
-                                        _currentMapType = MapPointType.works;
-                                        await showCupertinoDialog(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return CupertinoAlertDialog(
-                                              title: const Text(
-                                                  "Enter place name"),
-                                              content: Column(
-                                                children: [
-                                                  const SizedBox(height: 8.0),
-                                                  CupertinoTextField(
-                                                    controller: _textController,
-                                                    placeholder:
-                                                        "Type name here...",
+                                        onPressed: () async {
+                                          _currentMapType = MapPointType.works;
+                                          await showCupertinoDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return CupertinoAlertDialog(
+                                                title: const Text(
+                                                    "Enter place name"),
+                                                content: Column(
+                                                  children: [
+                                                    const SizedBox(height: 8.0),
+                                                    CupertinoTextField(
+                                                      controller:
+                                                          _textController,
+                                                      placeholder:
+                                                          "Type name here...",
+                                                    ),
+                                                  ],
+                                                ),
+                                                actions: [
+                                                  CupertinoDialogAction(
+                                                    child: const Text("Cancel"),
+                                                    onPressed: () {
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                  ),
+                                                  CupertinoDialogAction(
+                                                    child: const Text("Submit"),
+                                                    onPressed: () {
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                      _showAlertDialog(
+                                                          "Select Map Location",
+                                                          "Now, please select a point on the map to add your place.");
+                                                    },
                                                   ),
                                                 ],
-                                              ),
-                                              actions: [
-                                                CupertinoDialogAction(
-                                                  child: const Text("Cancel"),
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                ),
-                                                CupertinoDialogAction(
-                                                  child: const Text("Submit"),
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop();
-                                                    _showAlertDialog(
-                                                        "Select Map Location",
-                                                        "Now, please select a point on the map to add your place.");
-                                                  },
-                                                ),
-                                              ],
-                                            );
-                                          },
-                                        );
-                                      },
-                                      child: const Text("Add road works"),
-                                    ),
-                                    const SizedBox(width: 10),
-                                    ElevatedButton(
-                                      style: ButtonStyle(
-                                        elevation:
-                                            const WidgetStatePropertyAll(0),
-                                        backgroundColor:
-                                            const WidgetStatePropertyAll(
-                                          Color(0xFF759CFF),
-                                        ),
-                                        shape: WidgetStatePropertyAll(
-                                          RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
+                                              );
+                                            },
+                                          );
+                                        },
+                                        child: const Text("Add road works"),
+                                      ),
+                                      const SizedBox(width: 10),
+                                      ElevatedButton(
+                                        style: ButtonStyle(
+                                          elevation:
+                                              const WidgetStatePropertyAll(0),
+                                          backgroundColor:
+                                              const WidgetStatePropertyAll(
+                                            Color(0xFF759CFF),
+                                          ),
+                                          shape: WidgetStatePropertyAll(
+                                            RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      onPressed: () async {
-                                        _currentMapType = MapPointType.building;
-                                        await showCupertinoDialog(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return CupertinoAlertDialog(
-                                              title: const Text(
-                                                  "Enter place name"),
-                                              content: Column(
-                                                children: [
-                                                  const SizedBox(height: 8.0),
-                                                  CupertinoTextField(
-                                                    controller: _textController,
-                                                    placeholder:
-                                                        "Type name here...",
+                                        onPressed: () async {
+                                          _currentMapType =
+                                              MapPointType.building;
+                                          await showCupertinoDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return CupertinoAlertDialog(
+                                                title: const Text(
+                                                    "Enter place name"),
+                                                content: Column(
+                                                  children: [
+                                                    const SizedBox(height: 8.0),
+                                                    CupertinoTextField(
+                                                      controller:
+                                                          _textController,
+                                                      placeholder:
+                                                          "Type name here...",
+                                                    ),
+                                                  ],
+                                                ),
+                                                actions: [
+                                                  CupertinoDialogAction(
+                                                    child: const Text("Cancel"),
+                                                    onPressed: () {
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                  ),
+                                                  CupertinoDialogAction(
+                                                    child: const Text("Submit"),
+                                                    onPressed: () {
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                      _showAlertDialog(
+                                                          "Select Map Location",
+                                                          "Now, please select a point on the map to add your place.");
+                                                    },
                                                   ),
                                                 ],
-                                              ),
-                                              actions: [
-                                                CupertinoDialogAction(
-                                                  child: const Text("Cancel"),
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                ),
-                                                CupertinoDialogAction(
-                                                  child: const Text("Submit"),
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop();
-                                                    _showAlertDialog(
-                                                        "Select Map Location",
-                                                        "Now, please select a point on the map to add your place.");
-                                                  },
-                                                ),
-                                              ],
-                                            );
-                                          },
-                                        );
-                                      },
-                                      child: const Text("Add building"),
-                                    ),
-                                    const SizedBox(width: 10),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(height: screenSize.height * 0.02),
-                              const Text(
-                                "List",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 20,
-                                ),
-                              ),
-                              SizedBox(height: screenSize.height * 0.01),
-                              Consumer<AppManager>(
-                                builder: (context, value, child) {
-                                  if (value.mapPoints.isEmpty) {
-                                    return Container(
-                                      margin: EdgeInsets.only(
-                                        top: screenSize.height * 0.05,
+                                              );
+                                            },
+                                          );
+                                        },
+                                        child: const Text("Add building"),
                                       ),
-                                      child: const Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                              "There are no map points on the map yet."),
-                                        ],
-                                      ),
-                                    );
-                                  }
-                                  return SizedBox(
-                                    height: screenSize.height * 0.2,
-                                    child: ListView.builder(
-                                      padding: EdgeInsets.zero,
-                                      itemCount: value.mapPoints.length,
-                                      itemBuilder: (context, index) {
-                                        return Column(
+                                      const SizedBox(width: 10),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(height: screenSize.height * 0.02),
+                                const Text(
+                                  "List",
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                SizedBox(height: screenSize.height * 0.01),
+                                Consumer<AppManager>(
+                                  builder: (context, value, child) {
+                                    if (value.mapPoints.isEmpty) {
+                                      return Container(
+                                        margin: EdgeInsets.only(
+                                          top: screenSize.height * 0.05,
+                                        ),
+                                        child: const Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
                                           children: [
-                                            ListTile(
-                                              trailing: Text(
-                                                DateFormat('HH:mm, dd/MM/yy')
-                                                    .format(value
-                                                        .mapPoints[index]
-                                                        .addedDate),
-                                              ),
-                                              contentPadding: EdgeInsets.zero,
-                                              title: Text(
-                                                value.mapPoints[index].name,
-                                                style: const TextStyle(
-                                                    color: Colors.black),
-                                              ),
-                                              subtitle: Text(
-                                                value.mapPoints[index]
-                                                            .mapPointType ==
-                                                        MapPointType.building
-                                                    ? "Building"
-                                                    : "Road works",
-                                              ),
-                                              leading: Container(
-                                                padding:
-                                                    const EdgeInsets.all(7),
-                                                decoration: BoxDecoration(
-                                                  color: value.mapPoints[index]
-                                                              .mapPointType ==
-                                                          MapPointType.works
-                                                      ? Colors.yellow
-                                                      : Colors.blueAccent,
-                                                  shape: BoxShape.circle,
+                                            Text(
+                                                "There are no map points on the map yet."),
+                                          ],
+                                        ),
+                                      );
+                                    }
+                                    return Expanded(
+                                      child: ListView.builder(
+                                        padding: EdgeInsets.zero,
+                                        itemCount: value.mapPoints.length,
+                                        itemBuilder: (context, index) {
+                                          return Column(
+                                            children: [
+                                              ListTile(
+                                                trailing: Text(
+                                                  DateFormat('HH:mm, dd/MM/yy')
+                                                      .format(value
+                                                          .mapPoints[index]
+                                                          .addedDate),
                                                 ),
-                                                child: Icon(
+                                                contentPadding: EdgeInsets.zero,
+                                                title: Text(
+                                                  value.mapPoints[index].name,
+                                                  style: const TextStyle(
+                                                      color: Colors.black),
+                                                ),
+                                                subtitle: Text(
                                                   value.mapPoints[index]
                                                               .mapPointType ==
                                                           MapPointType.building
-                                                      ? CupertinoIcons
-                                                          .building_2_fill
-                                                      : CupertinoIcons.wrench,
+                                                      ? "Building"
+                                                      : "Road works",
+                                                ),
+                                                leading: Container(
+                                                  padding:
+                                                      const EdgeInsets.all(7),
+                                                  decoration: BoxDecoration(
+                                                    color: value
+                                                                .mapPoints[
+                                                                    index]
+                                                                .mapPointType ==
+                                                            MapPointType.works
+                                                        ? Colors.yellow
+                                                        : Colors.blueAccent,
+                                                    shape: BoxShape.circle,
+                                                  ),
+                                                  child: Icon(
+                                                    value.mapPoints[index]
+                                                                .mapPointType ==
+                                                            MapPointType
+                                                                .building
+                                                        ? CupertinoIcons
+                                                            .building_2_fill
+                                                        : CupertinoIcons.wrench,
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                            const Divider(),
-                                          ],
-                                        );
-                                      },
-                                    ),
-                                  );
-                                },
-                              ),
-                            ],
+                                              const Divider(),
+                                            ],
+                                          );
+                                        },
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
                           ),
               ],
             ),
