@@ -319,7 +319,6 @@ class _InfoCard extends StatelessWidget {
   final String content;
 
   const _InfoCard({
-    super.key,
     required this.label,
     required this.content,
   });

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:windsor_caesar_hub/pages/intiatives.edit.dart';
 
 class MyCard extends StatelessWidget {
   final String text;
@@ -70,7 +71,13 @@ class Initiatives extends StatelessWidget {
               backgroundColor: Colors.white,
               child: IconButton(
                 icon: const Icon(Icons.add, color: Colors.black),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Intiativesedit(),
+                      ));
+                },
               ),
             ),
           ),

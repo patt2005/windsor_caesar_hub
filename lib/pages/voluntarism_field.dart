@@ -44,10 +44,9 @@ class _VoluntarismFieldState extends State<VoluntarismField> {
                 labelText: _names[index],
                 border: InputBorder.none,
               ),
-              readOnly: index == 2, // Make Date field read-only
-              keyboardType: index == 3
-                  ? TextInputType.number
-                  : TextInputType.text, // Set keyboard type
+              readOnly: index == 2,
+              keyboardType:
+                  index == 3 ? TextInputType.number : TextInputType.text,
               onTap: index == 2 ? () => _selectDate(context, index) : null,
             ),
           ),
@@ -71,12 +70,10 @@ class _VoluntarismFieldState extends State<VoluntarismField> {
       lastDate: DateTime(2100),
     );
 
-    if (pickedDate != null) {
-      String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
-      setState(() {
-        _controllers[index].text = formattedDate;
-      });
-    }
+    String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate!);
+    setState(() {
+      _controllers[index].text = formattedDate;
+    });
   }
 
   Widget buildDescriptionField() {
